@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
+import { Inter, Bricolage_Grotesque, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-display",
   subsets: ["latin"],
 });
 
@@ -51,9 +56,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${geistMono.variable} scroll-smooth antialiased`}
+      className={`${inter.variable} ${bricolage.variable} ${geistMono.variable} scroll-smooth antialiased`}
     >
-      <body className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <body className="min-h-screen bg-frame text-foreground overflow-x-hidden">
         {children}
       </body>
     </html>

@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { ArrowRight, ShieldCheck, Landmark, Key, BarChart } from "lucide-react";
+import { SIGNUP_URL, DEMO_URL } from "@/lib/links";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-start pt-32 pb-24 overflow-hidden">
+    <section className="relative flex flex-col items-center justify-start pt-16 md:pt-24 pb-24 overflow-hidden">
       {/* ── Background: single subtle radial gradient ── */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -30,7 +30,7 @@ export default function HeroSection() {
           style={{ animationDelay: "100ms", animationFillMode: "forwards" }}
         >
           Launch your online store <br />
-          <span className="gradient-text">in minutes</span>
+          <span className="text-primary">in minutes</span>
         </h1>
 
         {/* Subheadline */}
@@ -44,23 +44,23 @@ export default function HeroSection() {
 
         {/* CTAs */}
         <div
-          className="mt-10 flex items-center justify-center gap-3.5 opacity-0 animate-fade-in-up"
+          className="mt-10 flex w-full flex-col sm:w-auto sm:flex-row items-center justify-center gap-3 opacity-0 animate-fade-in-up"
           style={{ animationDelay: "350ms", animationFillMode: "forwards" }}
         >
           <a
-            href="https://riverbase.app/"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-6 text-sm font-semibold rounded-lg cursor-pointer shadow-lg shadow-primary/20 inline-flex items-center justify-center transition-colors"
+            href={SIGNUP_URL}
+            className="group bg-primary text-primary-foreground hover:bg-primary/90 h-11 w-full sm:w-auto px-6 text-sm font-semibold rounded-lg cursor-pointer shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-0.5 inline-flex items-center justify-center transition-all duration-200"
           >
-            Start for Free
+            Create your store
+            <ArrowRight className="size-4 ml-1.5 transition-transform duration-200 group-hover:translate-x-0.5" />
           </a>
           <a
-            href="https://thith.riverbase.org/en"
+            href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-foreground/70 hover:text-foreground hover:bg-foreground/5 h-11 px-6 text-sm font-semibold cursor-pointer border border-border/80 inline-flex items-center justify-center rounded-lg transition-colors"
+            className="text-foreground/70 hover:text-foreground hover:bg-foreground/5 h-11 w-full sm:w-auto px-6 text-sm font-semibold cursor-pointer border border-border/80 inline-flex items-center justify-center rounded-lg transition-colors"
           >
             Explore Demo Store
-            <ArrowRight className="size-4 ml-1" />
           </a>
         </div>
 
@@ -84,8 +84,8 @@ export default function HeroSection() {
               <span className="w-3 h-3 rounded-full bg-yellow-400/80 block" />
               <span className="w-3 h-3 rounded-full bg-green-400/80 block" />
             </div>
-            <div className="h-6 w-72 rounded bg-background border border-border/40 text-[11px] text-muted-foreground/50 flex items-center justify-center font-mono select-none">
-              riverbase.io/dashboard/reconciliation
+            <div className="h-6 w-40 sm:w-72 max-w-[60%] truncate rounded bg-background border border-border/40 px-3 text-[11px] text-muted-foreground/50 flex items-center justify-center font-mono select-none">
+              riverbase.org/dashboard
             </div>
             <div className="w-12" /> {/* spacer */}
           </div>

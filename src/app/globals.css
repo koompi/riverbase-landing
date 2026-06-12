@@ -7,9 +7,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-frame: var(--frame);
   --font-sans: var(--font-inter), sans-serif;
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-inter), sans-serif;
+  --font-heading: var(--font-display), var(--font-inter), sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -55,6 +56,16 @@
 :root {
   --background: oklch(0.985 0.005 165);
   --foreground: oklch(0.22 0.02 165);
+  /* Desktop "wallpaper" behind the page window — a deeper cut of the
+     panel's icy blue so the hug fillets read against it. */
+  --frame: oklch(0.88 0.03 237);
+  /* Hug-fillet fill — must stay in sync with the header's bg-background/80
+     (same color-mix space Tailwind uses) so the fillets join the bar
+     without a seam. */
+  --panel-fill: color-mix(in oklab, var(--background) 80%, transparent);
+  /* One radius shared by the hug fillets and the page-window corners so
+     every curve in the frame reads as the same shape. */
+  --hug-radius: 1rem;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.22 0.02 165);
   --popover: oklch(1 0 0);
@@ -109,6 +120,15 @@
   html {
     @apply font-sans;
   }
+  /* Bricolage Grotesque carries the headings — warmer and more human than a
+     single-sans page. Optical tracking tightens as type grows. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display), var(--font-inter), sans-serif;
+    letter-spacing: -0.02em;
+  }
 }
 
 /* =========================================================================
@@ -160,20 +180,53 @@
   animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Entrance animations start at opacity:0. If motion is disabled we must still
+   reveal the content, otherwise reduced-motion users see a blank page. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-fade-in,
+  .animate-slide-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 /* =========================================================================
    Utility Classes — clean, professional
    ========================================================================= */
-.gradient-text {
-  background: linear-gradient(
-    135deg,
-    oklch(0.42 0.08 165),
-    oklch(0.60 0.12 210)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 .section-divider {
   border-top: 1px solid oklch(1 0 0 / 6%);
+}
+
+/* KOOMPI-style hug fillets: bar-colored quarter-rounds pinned below the
+   panel at each screen edge. The radial gradient is transparent inside a
+   16px circle and bar-colored outside it, so the bar appears to curve
+   down and hug the page. */
+.hug-fillet {
+  position: absolute;
+  top: 100%;
+  width: var(--hug-radius);
+  height: var(--hug-radius);
+  z-index: 3;
+  pointer-events: none;
+}
+.hug-fillet-left {
+  left: 0;
+  background: radial-gradient(
+    circle at bottom right,
+    transparent var(--hug-radius),
+    var(--panel-fill) var(--hug-radius)
+  );
+}
+.hug-fillet-right {
+  right: 0;
+  background: radial-gradient(
+    circle at bottom left,
+    transparent var(--hug-radius),
+    var(--panel-fill) var(--hug-radius)
+  );
 }
